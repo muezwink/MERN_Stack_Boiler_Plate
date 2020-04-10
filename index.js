@@ -4,8 +4,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
+const config = require('./config/key')
+
 const { User } = require('./models/user');
-mongoose.connect('mongodb+srv://muezwink:e32SY1QlqpCHxiCR@cluster0-uq9xw.mongodb.net/test?retryWrites=true&w=majority'
+mongoose.connect(''
                 , {useNewUrlParser: true}).then(() => console.log('DB connected'))
                                           .catch(err => console.error(err)
                 );
