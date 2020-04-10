@@ -1,9 +1,6 @@
-// npm install express --save
 const express = require('express');
 const app = express();
-// npm install mongoose@5.4.20 --save
 const mongoose = require('mongoose');
-// npm install body - parser@1.18.3 --save
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
@@ -16,6 +13,10 @@ mongoose.connect('mongodb+srv://muezwink:e32SY1QlqpCHxiCR@cluster0-uq9xw.mongodb
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
+
+app.get('/', (req, res)=>{
+    res.json({"hello ~": "Hi ~~ test !!!"})
+});
 
 app.post('/api/users/register', (req, res) => {
     const user = new User(req.body);
