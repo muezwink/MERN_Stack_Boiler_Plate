@@ -21,6 +21,7 @@ app.get('/', (req, res)=>{
 });
 
 app.post('/api/users/register', (req, res) => {
+console.log('/api/users/register_s');
     const user = new User(req.body);
 
     user.save((err, userData) => {
@@ -29,6 +30,7 @@ app.post('/api/users/register', (req, res) => {
             success: true
         })
     })
+console.log('/api/users/register_e');
 })
 
 app.post("/api/user/login", (req, res) => {
