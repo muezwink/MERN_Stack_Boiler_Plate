@@ -78,4 +78,8 @@ app.post("/api/user/login", (req, res) => {
     })
   })
 
-app.listen(4000);
+const port = process.env.PORT || 6000;
+
+app.listen(port, () => {
+  console.log('Server Running at ${port}');
+})
