@@ -4,9 +4,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
-const config = require('./config/key')
+const config = require('./config/key');
 
 const { User } = require('./models/user');
+const { auth } = require('./middleware/auth');
 mongoose.connect(config.mongoURI, {useNewUrlParser: true})
         .then(() => console.log('DB connected'))
         .catch(err => console.error(err)
@@ -16,22 +17,28 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.get('/', (req, res)=>{
-    res.json({"hello ~": "Hi ~~ test !!!"})
-});
+app.get("/api/user/auth", auth, (req, res) => {
+  res.status(200).json({
+    _id: req._id,
+    isAuth: true,
+    email: req.user.email,
+    name: req.user.name,
+    lastname: req.user.lastname,
+    role: req.user.role
+  })
+})
 
 app.post('/api/users/register', (req, res) => {
-console.log('/api/users/register_s');
     const user = new User(req.body);
 
-    user.save((err, userData) => {
-        if(err) return res.json({success: false, err})
+    user.save((err, doc) => {
+        if(err) return res.json({success: false, err});
         return res.status(200).json({
-            success: true
-        })
-    })
-console.log('/api/users/register_e');
-})
+            success: true,
+            userData: doc
+        });
+    });
+});
 
 app.post("/api/user/login", (req, res) => {
     //find the email
